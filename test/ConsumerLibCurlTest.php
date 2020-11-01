@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../lib/Segment/Client.php";
+require_once __DIR__ . "/../lib/Rudder/Client.php";
 
 class ConsumerLibCurlTest extends PHPUnit_Framework_TestCase
 {
@@ -9,7 +9,7 @@ class ConsumerLibCurlTest extends PHPUnit_Framework_TestCase
   public function setUp()
   {
     date_default_timezone_set("UTC");
-    $this->client = new Segment_Client(
+    $this->client = new Rudder_Client(
       "oq0vdlg7yi",
       array(
         "consumer" => "lib_curl",
@@ -88,7 +88,7 @@ class ConsumerLibCurlTest extends PHPUnit_Framework_TestCase
       },
     );
 
-    $client = new Segment_Client("x", $options);
+    $client = new Rudder_Client("x", $options);
 
     # Should error out with debug on.
     $client->track(array("user_id" => "some-user", "event" => "Socket PHP Event"));
@@ -102,7 +102,7 @@ class ConsumerLibCurlTest extends PHPUnit_Framework_TestCase
       "consumer" => "lib_curl",
     );
 
-    $client = new Segment_Client("testlargesize", $options);
+    $client = new Rudder_Client("testlargesize", $options);
 
     $big_property = "";
 

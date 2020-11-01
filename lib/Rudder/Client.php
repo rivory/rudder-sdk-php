@@ -8,7 +8,7 @@ require_once(__DIR__ . '/Consumer/LibCurl.php');
 require_once(__DIR__ . '/Consumer/Socket.php');
 require_once(__DIR__ . '/Version.php');
 
-class Segment_Client {
+class Rudder_Client {
   protected $consumer;
 
   /**
@@ -22,10 +22,10 @@ class Segment_Client {
    */
   public function __construct($secret, $options = array()) {
     $consumers = array(
-      "socket"     => "Segment_Consumer_Socket",
-      "file"       => "Segment_Consumer_File",
-      "fork_curl"  => "Segment_Consumer_ForkCurl",
-      "lib_curl"   => "Segment_Consumer_LibCurl"
+      "socket"     => "Rudder_Consumer_Socket",
+      "file"       => "Rudder_Consumer_File",
+      "fork_curl"  => "Rudder_Consumer_ForkCurl",
+      "lib_curl"   => "Rudder_Consumer_LibCurl"
     );
 
     // Use our socket libcurl by default
@@ -158,7 +158,7 @@ class Segment_Client {
       if (is_string($ts)) {
         return date("c", strtotime($ts));
       }
-  
+
       return date("c");
     }
 
@@ -228,16 +228,16 @@ class Segment_Client {
   }
 
   /**
-   * Add the segment.io context to the request
+   * Add the rudder context to the request
    * @return array additional context
    */
   private function getDefaultContext() {
-    global $SEGMENT_VERSION;
+    global $RUDDER_VERSION;
 
     return array(
       "library" => array(
         "name" => "analytics-php",
-        "version" => $SEGMENT_VERSION,
+        "version" => $RUDDER_VERSION,
         "consumer" => $this->consumer->getConsumer()
       )
     );

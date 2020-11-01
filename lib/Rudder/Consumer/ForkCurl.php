@@ -1,6 +1,6 @@
 <?php
 
-class Segment_Consumer_ForkCurl extends Segment_QueueConsumer {
+class Rudder_Consumer_ForkCurl extends Rudder_QueueConsumer {
   protected $type = "ForkCurl";
 
   /**
@@ -39,13 +39,13 @@ class Segment_Consumer_ForkCurl extends Segment_QueueConsumer {
     if ($this->host) {
       $host = $this->host;
     } else {
-      $host = "api.segment.io";
+      $host = "hosted.rudderlabs.com";
     }
     $path = "/v1/import";
     $url = $protocol . $host . $path;
 
     $cmd = "curl -u ${secret}: -X POST -H 'Content-Type: application/json'";
-    
+
     $tmpfname = "";
     if ($this->compress_request) {
       // Compress request to file
@@ -64,7 +64,7 @@ class Segment_Consumer_ForkCurl extends Segment_QueueConsumer {
     } else {
       $cmd.= " -d " . $payload;
     }
-    
+
     $cmd.= " '" . $url . "'";
 
     // Verify message size is below than 32KB

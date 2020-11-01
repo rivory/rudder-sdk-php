@@ -1,6 +1,6 @@
 <?php
 
-abstract class Segment_QueueConsumer extends Segment_Consumer {
+abstract class Rudder_QueueConsumer extends Rudder_Consumer {
   protected $type = "QueueConsumer";
 
   protected $queue;
@@ -33,7 +33,7 @@ abstract class Segment_QueueConsumer extends Segment_Consumer {
     if (isset($options["compress_request"])) {
       $this->compress_request = json_decode($options["compress_request"]);
     }
-    
+
     $this->queue = array();
   }
 

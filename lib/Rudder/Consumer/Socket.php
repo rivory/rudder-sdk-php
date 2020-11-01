@@ -1,6 +1,6 @@
 <?php
 
-class Segment_Consumer_Socket extends Segment_QueueConsumer {
+class Rudder_Consumer_Socket extends Rudder_QueueConsumer {
   protected $type = "Socket";
   private $socket_failed;
 
@@ -18,7 +18,7 @@ class Segment_Consumer_Socket extends Segment_QueueConsumer {
     }
 
     if (!isset($options["host"])) {
-      $options["host"] = "api.segment.io";
+      $options["host"] = "hosted.rudderlabs.com";
     }
 
     parent::__construct($secret, $options);

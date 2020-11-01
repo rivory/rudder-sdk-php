@@ -1,5 +1,5 @@
 <?php
-abstract class Segment_Consumer {
+abstract class Rudder_Consumer {
   protected $type = "Consumer";
 
   protected $options;

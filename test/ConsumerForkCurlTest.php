@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../lib/Segment/Client.php";
+require_once __DIR__ . "/../lib/Rudder/Client.php";
 
 class ConsumerForkCurlTest extends PHPUnit_Framework_TestCase
 {
@@ -9,7 +9,7 @@ class ConsumerForkCurlTest extends PHPUnit_Framework_TestCase
   public function setUp()
   {
     date_default_timezone_set("UTC");
-    $this->client = new Segment_Client(
+    $this->client = new Rudder_Client(
       "OnMMoZ6YVozrgSBeZ9FpkC0ixH0ycYZn",
       array(
         "consumer" => "fork_curl",
@@ -87,7 +87,7 @@ class ConsumerForkCurlTest extends PHPUnit_Framework_TestCase
     );
 
     // Create client and send Track message
-    $client = new Segment_Client("OnMMoZ6YVozrgSBeZ9FpkC0ixH0ycYZn", $options);
+    $client = new Rudder_Client("OnMMoZ6YVozrgSBeZ9FpkC0ixH0ycYZn", $options);
     $result = $client->track(array(
       "userId" => "some-user",
       "event" => "PHP Fork Curl'd\" Event with compression",
