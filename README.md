@@ -15,6 +15,8 @@ git clone https://github.com/rudderlabs/rudder-sdk-php /my/app/folders/
 
 ## Initialize the ```Client```
 ```
+require_once("/path/to/lib/Rudder.php");
+
 Rudder::init(WRITE_KEY, array(
   "data_plane_url" => DATA_PLANE_URL,
   "consumer"       => "lib_curl", // fork_curl
