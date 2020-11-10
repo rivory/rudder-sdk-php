@@ -46,14 +46,14 @@ class Rudder_Consumer_LibCurl extends Rudder_QueueConsumer {
       $payload = gzencode($payload);
     }
 
-    $protocol = $this->ssl() ? "https://" : "http://";
-    if ($this->host) {
-      $host = $this->host;
+    $protocol = "https://";
+    if ($this->dataPlaneUrl) {
+      $dataPlaneUrl = $this->dataPlaneUrl;
     } else {
-      $host = "hosted.rudderlabs.com";
+      $dataPlaneUrl = "hosted.rudderlabs.com";
     }
-    $path = "/v1/import";
-    $url = $protocol . $host . $path;
+    $path = "/v1/batch";
+    $url = $protocol . $dataPlaneUrl . $path;
 
     $backoff = 100;     // Set initial waiting time to 100ms
 

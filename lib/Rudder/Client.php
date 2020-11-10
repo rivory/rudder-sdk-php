@@ -171,7 +171,7 @@ class Rudder_Client {
     // microtime(true)
     $sec = (int)$parts[0];
     $usec = (int)$parts[1];
-    $fmt = sprintf("Y-m-d\\TH:i:s%sP", $usec);
+    $fmt = sprintf("Y-m-d\\TH:i:s%s\\Z", $usec);
 
     return date($fmt, (int)$sec);
   }
@@ -236,7 +236,7 @@ class Rudder_Client {
 
     return array(
       "library" => array(
-        "name" => "analytics-php",
+        "name" => "rudder-analytics-php",
         "version" => $RUDDER_VERSION,
         "consumer" => $this->consumer->getConsumer()
       )

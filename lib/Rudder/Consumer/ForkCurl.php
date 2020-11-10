@@ -35,35 +35,19 @@ class Rudder_Consumer_ForkCurl extends Rudder_QueueConsumer {
     $payload = escapeshellarg($payload);
     $secret = escapeshellarg($this->secret);
 
-    $protocol = $this->ssl() ? "https://" : "http://";
-    if ($this->host) {
-      $host = $this->host;
+    $protocol = "https://";
+    if ($this->dataPlaneUrl) {
+      $dataPlaneUrl = $this->dataPlaneUrl;
     } else {
-      $host = "hosted.rudderlabs.com";
+      $dataPlaneUrl = "hosted.rudderlabs.com";
     }
-    $path = "/v1/import";
-    $url = $protocol . $host . $path;
+    $path = "/v1/batch";
+    $url = $protocol . $dataPlaneUrl . $path;
 
     $cmd = "curl -u ${secret}: -X POST -H 'Content-Type: application/json'";
 
     $tmpfname = "";
-    if ($this->compress_request) {
-      // Compress request to file
-      $tmpfname = tempnam("/tmp", "forkcurl_");
-      $cmd2 = "echo " . $payload . " | gzip > " . $tmpfname;
-      exec($cmd2, $output, $exit);
-
-      if (0 != $exit) {
-        $this->handleError($exit, $output);
-        return false;
-      }
-
-      $cmd.= " -H 'Content-Encoding: gzip'";
-
-      $cmd.= " --data-binary '@" . $tmpfname . "'";
-    } else {
-      $cmd.= " -d " . $payload;
-    }
+    $cmd.= " -d " . $payload;
 
     $cmd.= " '" . $url . "'";
 

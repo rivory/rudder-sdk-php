@@ -192,7 +192,7 @@ class ConsumerSocketTest extends PHPUnit_Framework_TestCase
   {
     $client = new Rudder_Client("x", array(
       "consumer" => "socket",
-      "host" => "hosted.rudderlabs.com",
+      "dataPlaneUrl" => "hosted.rudderlabs.com",
       "error_handler" => function ($errno, $errmsg) {
         throw new \RuntimeException($errmsg, $errno);
       },
