@@ -6,7 +6,7 @@ Rudder is an open-source Segment alternative written in Go, built for the enterp
 **Long answer:**
 Rudder is a platform for collecting, storing and routing customer event data to dozens of tools. Rudder is open-source, can run in your cloud environment (AWS, GCP, Azure or even your data-centre) and provides a powerful transformation framework to process your event data on the fly.
 
-## Getting Started with Python SDK
+## Getting Started with PHP SDK
 
 Install `rudder-sdk-php` using `composer`
 ```
