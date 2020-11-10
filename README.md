@@ -8,24 +8,31 @@ Rudder is a platform for collecting, storing and routing customer event data to 
 
 ## Getting Started with Python SDK
 
-Install `rudder-sdk-python` using `pip`
+Install `rudder-sdk-php` using `composer`
 ```
-pip install rudder-sdk-python
+git clone https://github.com/rudderlabs/rudder-sdk-php /my/app/folders/
 ```
 
 ## Initialize the ```Client```
 ```
-import rudder_analytics
-
-rudder_analytics.write_key = <WRITE_KEY>
-rudder_analytics.data_plane_url = <DATA_PLANE_URL>
+Rudder::init(WRITE_KEY, array(
+  "data_plane_url" => DATA_PLANE_URL,
+  "consumer"       => "lib_curl", // fork_curl
+  "debug"          => true,
+  "max_queue_size" => 10000,
+  "batch_size"     => 100
+));
 ```
 
 ## Send Events
 ```
-rudder_analytics.track('developer_user_id', 'Simple Track Event', {
-  'key1': 'val1'
-})
+Rudder::track(array(
+  "userId" => "f4ca124298",
+  "event" => "Signed Up",
+  "properties" => array(
+    "plan" => "Enterprise"
+  )
+));
 ```
 
 ## Contact Us
