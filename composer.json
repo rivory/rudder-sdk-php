@@ -1,19 +1,19 @@
 {
-	"name": "segmentio/analytics-php",
-	"version": "1.6.1-beta",
-	"description": "Segment Analytics PHP Library",
+	"name": "rudderstack/rudder-sdk-php",
+	"version": "1.0.0",
+	"description": "RudderStack PHP library",
 	"keywords": [
 		"analytics",
-		"segmentio",
-		"segment",
-		"analytics.js"
+		"rudder",
+		"rudderstack",
+		"rudderanalytics.js"
 	],
-	"homepage": "https://segment.com/libraries/php",
+	"homepage": "https://rudderstack.com/",
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Segment.io <friends@segment.com>",
-			"homepage": "https://segment.com/"
+			"name": "RudderStack <arnab@rudderstack.com>",
+			"homepage": "https://rudderstack.com/"
 		}
 	],
 	"require": {
@@ -26,7 +26,7 @@
 	},
 	"autoload": {
 		"files": [
-			"lib/Segment.php"
+			"lib/Rudder.php"
 		]
 	},
 	"bin": [

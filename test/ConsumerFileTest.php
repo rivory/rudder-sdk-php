@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../lib/Segment/Client.php";
+require_once __DIR__ . "/../lib/Rudder/Client.php";
 
 class ConsumerFileTest extends PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class ConsumerFileTest extends PHPUnit_Framework_TestCase
       unlink($this->filename());
     }
 
-    $this->client = new Segment_Client(
+    $this->client = new Rudder_Client(
       "oq0vdlg7yi",
       array(
         "consumer" => "file",
@@ -111,7 +111,7 @@ class ConsumerFileTest extends PHPUnit_Framework_TestCase
   public function testProductionProblems()
   {
     // Open to a place where we should not have write access.
-    $client = new Segment_Client(
+    $client = new Rudder_Client(
       "oq0vdlg7yi",
       array(
         "consumer" => "file",

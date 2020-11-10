@@ -1,18 +1,18 @@
 <?php
 
-require_once __DIR__ . "/../lib/Segment.php";
+require_once __DIR__ . "/../lib/Rudder.php";
 
 class AnalyticsTest extends PHPUnit_Framework_TestCase
 {
   public function setUp()
   {
     date_default_timezone_set("UTC");
-    Segment::init("oq0vdlg7yi", array("debug" => true));
+    Rudder::init("oq0vdlg7yi", array("debug" => true));
   }
 
   public function testTrack()
   {
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "john",
       "event" => "Module PHP Event",
     )));
@@ -20,7 +20,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testGroup()
   {
-    $this->assertTrue(Segment::group(array(
+    $this->assertTrue(Rudder::group(array(
       "groupId" => "group-id",
       "userId" => "user-id",
       "traits" => array(
@@ -31,7 +31,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testGroupAnonymous()
   {
-    $this->assertTrue(Segment::group(array(
+    $this->assertTrue(Rudder::group(array(
       "groupId" => "group-id",
       "anonymousId" => "anonymous-id",
       "traits" => array(
@@ -42,11 +42,11 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   /**
    * @expectedException \Exception
-   * @expectedExceptionMessage Segment::group() requires userId or anonymousId
+   * @expectedExceptionMessage Rudder::group() requires userId or anonymousId
    */
   public function testGroupNoUser()
   {
-    Segment::group(array(
+    Rudder::group(array(
       "groupId" => "group-id",
       "traits" => array(
         "plan" => "startup",
@@ -56,41 +56,41 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testMicrotime()
   {
-    $this->assertTrue(Segment::page(array(
+    $this->assertTrue(Rudder::page(array(
       "anonymousId" => "anonymous-id",
       "name" => "analytics-php-microtime",
       "category" => "docs",
       "timestamp" => microtime(true),
       "properties" => array(
         "path" => "/docs/libraries/php/",
-        "url" => "https://segment.io/docs/libraries/php/",
+        "url" => "https://docs.rudderstack.com",
       ),
     )));
   }
 
   public function testPage()
   {
-    $this->assertTrue(Segment::page(array(
+    $this->assertTrue(Rudder::page(array(
       "anonymousId" => "anonymous-id",
       "name" => "analytics-php",
       "category" => "docs",
       "properties" => array(
         "path" => "/docs/libraries/php/",
-        "url" => "https://segment.io/docs/libraries/php/",
+        "url" => "https://docs.rudderstack.com",
       ),
     )));
   }
 
   public function testBasicPage()
   {
-    $this->assertTrue(Segment::page(array(
+    $this->assertTrue(Rudder::page(array(
       "anonymousId" => "anonymous-id",
     )));
   }
 
   public function testScreen()
   {
-    $this->assertTrue(Segment::screen(array(
+    $this->assertTrue(Rudder::screen(array(
       "anonymousId" => "anonymous-id",
       "name" => "2048",
       "category" => "game built with php :)",
@@ -102,14 +102,14 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testBasicScreen()
   {
-    $this->assertTrue(Segment::screen(array(
+    $this->assertTrue(Rudder::screen(array(
       "anonymousId" => "anonymous-id"
     )));
   }
 
   public function testIdentify()
   {
-    $this->assertTrue(Segment::identify(array(
+    $this->assertTrue(Rudder::identify(array(
       "userId" => "doe",
       "traits" => array(
         "loves_php" => false,
@@ -120,11 +120,11 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testEmptyTraits()
   {
-    $this->assertTrue(Segment::identify(array(
+    $this->assertTrue(Rudder::identify(array(
       "userId" => "empty-traits",
     )));
 
-    $this->assertTrue(Segment::group(array(
+    $this->assertTrue(Rudder::group(array(
       "userId" => "empty-traits",
       "groupId" => "empty-traits",
     )));
@@ -132,12 +132,12 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testEmptyArrayTraits()
   {
-    $this->assertTrue(Segment::identify(array(
+    $this->assertTrue(Rudder::identify(array(
       "userId" => "empty-traits",
       "traits" => array(),
     )));
 
-    $this->assertTrue(Segment::group(array(
+    $this->assertTrue(Rudder::group(array(
       "userId" => "empty-traits",
       "groupId" => "empty-traits",
       "traits" => array(),
@@ -146,12 +146,12 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testEmptyProperties()
   {
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "empty-properties",
     )));
 
-    $this->assertTrue(Segment::page(array(
+    $this->assertTrue(Rudder::page(array(
       "category" => "empty-properties",
       "name" => "empty-properties",
       "userId" => "user-id",
@@ -160,13 +160,13 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testEmptyArrayProperties()
   {
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "empty-properties",
       "properties" => array(),
     )));
 
-    $this->assertTrue(Segment::page(array(
+    $this->assertTrue(Rudder::page(array(
       "category" => "empty-properties",
       "name" => "empty-properties",
       "userId" => "user-id",
@@ -176,7 +176,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testAlias()
   {
-    $this->assertTrue(Segment::alias(array(
+    $this->assertTrue(Rudder::alias(array(
       "previousId" => "previous-id",
       "userId" => "user-id",
     )));
@@ -184,7 +184,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testContextEmpty()
   {
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "Context Test",
       "context" => array(),
@@ -193,7 +193,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testContextCustom()
   {
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "Context Test",
       "context" => array(
@@ -204,43 +204,43 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase
 
   public function testTimestamps()
   {
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "integer-timestamp",
       "timestamp" => (int) mktime(0, 0, 0, date('n'), 1, date('Y')),
     )));
 
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "string-integer-timestamp",
       "timestamp" => (string) mktime(0, 0, 0, date('n'), 1, date('Y')),
     )));
 
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "iso8630-timestamp",
       "timestamp" => date(DATE_ATOM, mktime(0, 0, 0, date('n'), 1, date('Y'))),
     )));
 
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "iso8601-timestamp",
       "timestamp" => date(DATE_ATOM, mktime(0, 0, 0, date('n'), 1, date('Y'))),
     )));
 
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "strtotime-timestamp",
       "timestamp" => strtotime('1 week ago'),
     )));
 
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "microtime-timestamp",
       "timestamp" => microtime(true),
     )));
 
-    $this->assertTrue(Segment::track(array(
+    $this->assertTrue(Rudder::track(array(
       "userId" => "user-id",
       "event" => "invalid-float-timestamp",
       "timestamp" => ((string) mktime(0, 0, 0, date('n'), 1, date('Y'))) . '.',

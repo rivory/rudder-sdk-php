@@ -1,14 +1,13 @@
 <?php
 
-abstract class Segment_QueueConsumer extends Segment_Consumer {
+abstract class Rudder_QueueConsumer extends Rudder_Consumer {
   protected $type = "QueueConsumer";
 
   protected $queue;
   protected $max_queue_size = 1000;
   protected $batch_size = 100;
   protected $maximum_backoff_duration = 10000;    // Set maximum waiting limit to 10s
-  protected $host = "";
-  protected $compress_request = false;
+  protected $dataPlaneUrl = "";
 
   /**
    * Store our secret and options as part of this consumer
@@ -26,14 +25,10 @@ abstract class Segment_QueueConsumer extends Segment_Consumer {
       $this->batch_size = $options["batch_size"];
     }
 
-    if (isset($options["host"])) {
-      $this->host = $options["host"];
+    if (isset($options["data_plane_url"])) {
+      $this->dataPlaneUrl = $options["data_plane_url"];
     }
 
-    if (isset($options["compress_request"])) {
-      $this->compress_request = json_decode($options["compress_request"]);
-    }
-    
     $this->queue = array();
   }
 

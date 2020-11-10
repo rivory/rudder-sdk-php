@@ -1,6 +1,6 @@
 <?php
 
-class Segment_Consumer_File extends Segment_Consumer {
+class Rudder_Consumer_File extends Rudder_Consumer {
   protected $type = "File";
 
   private $file_handle;

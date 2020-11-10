@@ -1,6 +1,6 @@
 <?php
 
-class Segment_Consumer_Socket extends Segment_QueueConsumer {
+class Rudder_Consumer_Socket extends Rudder_QueueConsumer {
   protected $type = "Socket";
   private $socket_failed;
 
@@ -17,8 +17,8 @@ class Segment_Consumer_Socket extends Segment_QueueConsumer {
       $options["timeout"] = 5;
     }
 
-    if (!isset($options["host"])) {
-      $options["host"] = "api.segment.io";
+    if (!isset($options["data_plane_url"])) {
+      $options["data_plane_url"] = "hosted.rudderlabs.com";
     }
 
     parent::__construct($secret, $options);
@@ -39,7 +39,7 @@ class Segment_Consumer_Socket extends Segment_QueueConsumer {
     $payload = $this->payload($batch);
     $payload = json_encode($payload);
 
-    $body = $this->createBody($this->options["host"], $payload);
+    $body = $this->createBody($this->options["dataPlaneUrl"], $payload);
     if (false === $body) {
       return false;
     }
@@ -53,7 +53,7 @@ class Segment_Consumer_Socket extends Segment_QueueConsumer {
     }
 
     $protocol = $this->ssl() ? "ssl" : "tcp";
-    $host = $this->options["host"];
+    $dataPlaneUrl = $this->options["dataPlaneUrl"];
     $port = $this->ssl() ? 443 : 80;
     $timeout = $this->options["timeout"];
 
@@ -61,7 +61,7 @@ class Segment_Consumer_Socket extends Segment_QueueConsumer {
       // Open our socket to the API Server.
       // Since we're try catch'ing prevent PHP logs.
       $socket = @pfsockopen(
-        $protocol . "://" . $host,
+        $protocol . "://" . $dataPlaneUrl,
         $port,
         $errno,
         $errstr,
@@ -161,14 +161,14 @@ class Segment_Consumer_Socket extends Segment_QueueConsumer {
 
   /**
    * Create the body to send as the post request.
-   * @param  string $host
+   * @param  string $dataPlaneUrl
    * @param  string $content
    * @return string body
    */
-  private function createBody($host, $content) {
+  private function createBody($dataPlaneUrl, $content) {
     $req = "";
     $req.= "POST /v1/import HTTP/1.1\r\n";
-    $req.= "Host: " . $host . "\r\n";
+    $req.= "dataPlaneUrl: " . $dataPlaneUrl . "\r\n";
     $req.= "Content-Type: application/json\r\n";
     $req.= "Authorization: Basic " . base64_encode($this->secret . ":") . "\r\n";
     $req.= "Accept: application/json\r\n";
