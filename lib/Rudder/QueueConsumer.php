@@ -8,6 +8,7 @@ abstract class Rudder_QueueConsumer extends Rudder_Consumer {
   protected $batch_size = 100;
   protected $maximum_backoff_duration = 10000;    // Set maximum waiting limit to 10s
   protected $dataPlaneUrl = "";
+  protected $compress_request = false;
 
   /**
    * Store our secret and options as part of this consumer
@@ -27,6 +28,10 @@ abstract class Rudder_QueueConsumer extends Rudder_Consumer {
 
     if (isset($options["data_plane_url"])) {
       $this->dataPlaneUrl = $options["data_plane_url"];
+    }
+
+    if (isset($options["compress_request"])) {
+      $this->compress_request = $options["compress_request"];
     }
 
     $this->queue = array();
